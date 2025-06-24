@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рекламное агентство | Наружная реклама</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Иконки Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Кастомные стили */
+        .navbar { background-color: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .carousel-item { height: 500px; background-size: cover; background-position: center; }
+        .logo-partners img { max-height: 80px; filter: grayscale(100%); transition: all 0.3s; }
+        .logo-partners img:hover { filter: none; }
+        footer { background: #343a40; color: #ffffff; }
+    </style>
+</head>
+<body>
+    <!-- Шапка с навигацией -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="https://via.placeholder.com/150x50?text=Логотип" alt="Логотип" height="50">
+            </a>
+            <div class="d-none d-lg-block ms-auto me-3">
+                <a href="tel:+79991234567" class="text-dark me-2"><i class="fas fa-phone"></i> +7 (999) 123-45-67</a>
+                <a href="mailto:info@agency.ru" class="text-dark"><i class="fas fa-envelope"></i> info@agency.ru</a>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#about">О нас</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#outdoor">Наружная реклама</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#interior">Интерьерная реклама</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#souvenirs">Сувенирная продукция</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#billboards">Билборды</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#laser">Лазерная резка</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Слайдер услуг -->
+    <div id="servicesCarousel" class="carousel slide mt-5" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            {% for slide in slides %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}" style="background-image: url('{{ slide.image.url }}');">
+                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-4">
+                    <h2>{{ slide.title }}</h2>
+                    {% if slide.description %}<p>{{ slide.description }}</p>{% endif %}
+                    <a href="{{ slide.link }}" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <!-- Кнопки управления -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#servicesCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#servicesCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+          </button>
+    </div>
+
+    <!-- Текстовый блок -->
+    <section class="container my-5 py-4">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="mb-4">О нашем агентстве</h2>
+                <p>Мы создаём эффективную рекламу с 2010 года. Наша команда профессионалов реализует проекты любой сложности — от печати визиток до масштабных билбордов. Качество, сроки и индивидуальный подход — наши ключевые преимущества.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Логотипы клиентов -->
+    <section class="bg-light py-5">
+        <div class="container">
+            <h3 class="text-center mb-5">Наши клиенты</h3>
+            <div class="row logo-partners justify-content-center">
+                <div class="col-6 col-md-2 text-center p-3"><img src="https://via.placeholder.com/150x80?text=Client+1" alt="Клиент 1" class="img-fluid"></div>
+                <div class="col-6 col-md-2 text-center p-3"><img src="https://via.placeholder.com/150x80?text=Client+2" alt="Клиент 2" class="img-fluid"></div>
+                <div class="col-6 col-md-2 text-center p-3"><img src="https://via.placeholder.com/150x80?text=Client+3" alt="Клиент 3" class="img-fluid"></div>
+                <div class="col-6 col-md-2 text-center p-3"><img src="https://via.placeholder.com/150x80?text=Client+4" alt="Клиент 4" class="img-fluid"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="py-4">
+        <div class="container text-center">
+            <div class="mb-3">
+                <a href="#" class="text-white mx-2"><i class="fab fa-vk fa-2x"></i></a>
+                <a href="#" class="text-white mx-2"><i class="fab fa-telegram fa-2x"></i></a>
+                <a href="#" class="text-white mx-2"><i class="fab fa-instagram fa-2x"></i></a>
+            </div>
+            <p class="mb-0">© 2023 Рекламное агентство. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
