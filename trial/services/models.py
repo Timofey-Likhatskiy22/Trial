@@ -13,7 +13,7 @@ class ServiceSlide(models.Model):
     title = models.CharField("Заголовок", max_length=100)
     description = models.TextField("Описание", blank=True)
     image = models.ImageField("Изображение", upload_to='slides/')
-    link = models.CharField("Ссылка", max_length=100, default='#', help_text="Например: #outdoor")
+    link = models.URLField("Ссылка", max_length=500, default='#', blank=True)
     order = models.PositiveIntegerField("Порядок", default=0)
     is_active = models.BooleanField("Активно", default=True)
 
