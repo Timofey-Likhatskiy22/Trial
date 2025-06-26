@@ -1,0 +1,103 @@
+{% extends "services/base.html" %}
+
+{% block content %}
+    <!-- Слайдер только для главной страницы -->
+    {% if page.is_home and page.show_slider %}
+        {% if has_slides %}
+            <div id="servicesCarousel" class="carousel slide" data-bs-ride="carousel" style="height: 500px;">
+                <div class="carousel-inner h-100">
+                    {% for slide in slides %}
+                    <div class="carousel-item h-100 {% if forloop.first %}active{% endif %}">
+                        <img src="{{ slide.image.url }}" 
+                             class="d-block w-100 h-100" 
+                             style="object-fit: cover;"
+                             alt="{{ slide.title }}">
+                        <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-4">
+                            <h2>{{ slide.title }}</h2>
+                            {% if slide.description %}<p>{{ slide.description }}</p>{% endif %}
+                            <a href="{{ slide.link }}" class="btn btn-primary">Подробнее</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#servicesCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#servicesCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+        {% else %}
+            <!-- Заглушка при отсутствии слайдов -->
+            <div class="container py-5">
+                <div class="alert alert-info text-center">
+                    <h3 class="mb-3"><i class="fas fa-info-circle me-2"></i>Слайды в разработке</h3>
+                    <p class="mb-0">Скоро здесь появится информация о наших услугах</p>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+    
+    <div class="container my-5 py-4">
+        <!-- Основной контент страницы -->
+        <h1 class="mb-4">{{ page.title }}</h1>
+        
+        {% if page.content %}
+            <div class="page-content mb-5">
+                {{ page.content|safe }}
+            </div>
+        {% endif %}
+        
+        <!-- Блоки контента -->
+        {% for block in content_blocks %}
+            <div class="content-block mb-4">
+                {% if block.title %}
+                    <h2 class="mb-3">{{ block.title }}</h2>
+                {% endif %}
+                <div class="block-content">
+                    {{ block.content|safe }}
+                </div>
+            </div>
+        {% endfor %}
+        
+        <!-- Галерея -->
+        {% if gallery %}
+            <div class="gallery mt-5">
+                <h2 class="mb-4">Галерея</h2>
+                <div class="row">
+                    {% for image in gallery.images.all %}
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <img src="{{ image.image.url }}" 
+                                     class="card-img-top" 
+                                     style="height: 200px; object-fit: cover;"
+                                     alt="{{ image.title|default:gallery.title }}">
+                                <div class="card-body">
+                                    {% if image.title %}
+                                        <h5 class="card-title">{{ image.title }}</h5>
+                                    {% endif %}
+                                    {% if image.description %}
+                                        <p class="card-text">{{ image.description }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    
+    <!-- Скрипт для инициализации карусели -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var carouselEl = document.getElementById('servicesCarousel');
+        if (carouselEl) {
+            var carousel = new bootstrap.Carousel(carouselEl, {
+                interval: 5000,
+                wrap: true
+            });
+        }
+    });
+    </script>
+{% endblock %}
